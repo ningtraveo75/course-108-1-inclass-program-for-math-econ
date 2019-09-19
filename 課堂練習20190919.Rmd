@@ -17,3 +17,255 @@ use_condaenv("myEnvironment", required = T)
 a=5
 type(a) # check class type
 ```
+
+```{python}
+range
+```
+
+# 1.3
+```{r}
+# conda安裝方式
+conda_install("myEnvironment", # 沙盒環境名稱
+              c("numpy","pandas")) # 要安裝的modules
+```
+
+# 1.5
+## 1.5.1 一維
+```{python}
+string = "How are you"
+string2 = 'I am fine' # use '' is also ok
+type(string)
+numInteger = 3
+type(numInteger)
+#len(numInteger)
+numFloat = 3.
+type(numFloat)
+#len(numFloat)
+```
+
+邏輯
+```{python}
+logiT=True
+type(logiT)
+logiF=False
+type(logiF)
+```
+
+```{python}
+logiT+logiT+logiF
+```
+
+## 1.5.2 多維
+```{python}
+list1=[1,3,5]
+list2=[1,"b",True,(1,True,["A"])]
+len(list1)
+len(list2)
+```
+
+```{python}
+list3=["Hello world",(True,False),{3,6,9},'python']
+len(list3)
+```
+
+### packing/unpacking (*:吸收剩餘無法對應的元素)
+```{python}
+listA=[1,2,True]
+listA
+type(listA)
+listB=[1,["a","b"],True] # nested list
+listB
+type(listB)
+```
+
+```{python}
+var1, var2, var3 = listA
+```
+
+```{python}
+print(listA)
+
+a,*b = listA
+a; type(a)
+b; type(b)
+```
+
+```{python}
+print(listA)
+
+*a, b = listA
+a; type(a)
+b; type(b)
+```
+
+```{python}
+gradeTuple=("Ken",72,88)
+name, *grade = gradeTuple
+```
+
+```{python}
+name
+grade
+type(grade)
+```
+
+```{python}
+gradeTuple2=("Ken",72,88,"man")
+name, *grade, gender = gradeTuple2
+name
+grade
+gender
+```
+
+錯誤例子(最後一行有unhashable type:'List')
+```{python}
+setD={1,"a",(1,4)}
+type(setD)
+print(setD)
+setE={True,False}
+print(setE)
+setF={1,"b",[1,4]}
+```
+
+錯誤例子(最後一行有unhashable type:'List')
+```{python}
+setG={1,"b",(1,4,(5,8))}
+print(setG)
+setH={1,"b",(1,4,[5,8])}
+```
+
+set裡重複資料只顯示一次(帶有unique功能)
+```{python}
+setE={"a","b","b"}
+print(setE)
+len(setE)
+```
+
+使用set來刪除list中重覆的元素
+```{python}
+listY=[1,1,3,0,1,0,2]
+listY
+list(set(listY))
+
+setY=set(listY)
+setY
+listY2=list(setY)
+listY2
+```
+
+# 1.6 元素粹取
+## 1.6.1取一個元素
+```{python}
+listA
+listA[0] # from 0
+listA[1]
+listA[2]
+listA[3] # without 3
+```
+
+```{python}
+tupleC=(1,["a","b"],True)
+type(tupleC)
+print(tupleC)
+
+tupleC
+tupleC[0] # ffrom 0
+tupleC[1]
+tupleC[2]
+tupleC[3] # without 3
+```
+
+```{python}
+listA = [('Mary','John'),('A2838','C8898'),(89,73)]
+len(listA) # 元素個數
+listA[0] # 取第0個元素
+listA[0][1] # 取第0個元素出在，接著取它的第1個元素
+
+type(listA[0])
+type(listA[0][1])
+```
+
+```{python}
+tupleC=(1,["a","bay"],True)
+tupleC[1][1]
+type(tupleC[1][1])
+tupleC[1][1][0] # 可以更進一步取到字元
+```
+
+學號4107732882
+```{python 學號例子}
+studentId2="4107732882"
+studentId2[3]
+```
+
+```{python}
+studentId=4107732882
+studentId3=str(studentId)
+studentId3[3]
+type(studentId)
+```
+
+## 1.6.2 取規則多個
+```{python}
+listA=['A','B','C','D','E','F','G','H','I','J']
+listA
+listA[0:5:1] # 最後的:1 是指每次移動+1
+listA[0:5]
+listA[0:5:2] # 最後的:2 是指每次移動+2 (所以取0,2,4)
+listA[:5] # 前面5個
+```
+
+```{python}
+listA
+listA[-2:5:-1] # 倒數第二個(8),每次往前找1個,在5之前停下來
+listA[-2:-6:-1] # 倒數第二個(8),每次往前找1個,在5停下來
+listA[-5:-1:1] # 倒數第五個(5),每次往後找1個，直到8
+listA[-5:] # 倒數後5個
+```
+
+```{python}
+listA=['A','B','C','D','E','F','G','H','I','J']
+listA
+
+listA
+listA[-2:5:-1] 
+listA[-2:-6:-1]
+listA[-5:-1:1] 
+listA[-5:] 
+```
+
+練習
+```{python}
+listA[1:]
+listA[:-1]
+```
+
+## 1.6.3 不規則選取
+選0,2,7
+```{python}
+[listA[0],listA[2],listA[7]]
+```
+
+for i in [0,2,7]: expression listA[i]
+i=0 list[0]
+i=2 list[2]
+i=7 list[7]
+
+```{python}
+list( listA[index] for index in [0,2,7] )
+```
+
+取1,8,3,4
+```{python}
+list(listA[index] for index in [1,8,3,4])
+```
+等同於
+```{python}
+[listA[index] for index in [1,8,3,4]]
+```
+
+練習: 取出它的第1，7，8元素
+```{python}
+listB=[2,5,-1,31,-22,3,17,25]
+[listB[index] for index in [0,6,7]]
+```
