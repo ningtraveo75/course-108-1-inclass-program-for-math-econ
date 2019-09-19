@@ -1,0 +1,19 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+```{python}
+a=5
+type(a) # check class type
+```
