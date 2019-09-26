@@ -13,8 +13,8 @@ use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
 use_condaenv("myEnvironment", required = T)
 ```
 
-# 1.7 dictionary
-## 1.7.1 key-value pair
+## 1.7 dictionary
+### 1.7.1 key-value pair
 ```{python}
 setA={"a","c",2,3,7}
 setA
@@ -98,8 +98,8 @@ print(sparseMatrix) #sparseMatrix只記不為0的位置，當0多的時候可以
 sparseMatrix[(3,3)]
 ```
 
-
-
+## 1.8
+練習
 ```{python}
 listA=[2,7,5,-2,13]
 listA[0]=0
@@ -107,3 +107,306 @@ listA[1]=("a","b")
 listA
 ```
 
+## 1.9 List copy
+### 1.9.1 定義複製與切割複製
+```{python}
+originalList=[1,2,"a"]
+definitionCopy=originalList # 定義式複製
+sliceCopy=originalList[:] # slice複製
+sliceCopy2=originalList.copy()
+definitionCopy
+sliceCopy
+sliceCopy2
+```
+
+定義式複製(是複製記憶體位置的值，所以更改原位置值後，複製的值也改了)
+```{python}
+print(definitionCopy)
+print(originalList)
+
+definitionCopy[1]="b"
+print(definitionCopy)
+print(originalList)
+
+originalList[1]=2
+print(definitionCopy)
+print(originalList)
+```
+
+slice複製(又名"淺複製")(是另創了一個新的記憶體位置存值，所以改了原位置值後，複製的值不改)
+```{python}
+originalList=[1,2,"a"]
+sliceCopy=originalList[:] # slice複製
+print(sliceCopy)
+print(originalList)
+
+sliceCopy[1]="b"
+print(sliceCopy)
+print(originalList)
+
+originalList[1]="f"
+print(sliceCopy)
+print(originalList)
+```
+
+### 1.9.2 元素儲存邏輯
+記憶體存treeA的方式---
+有一塊記憶體address0：[1,2,3,address1,address2]
+address1 指向某一記憶體位置其內容為[4,5]
+address2 指向某一記憶體位置其內容為[6,7]
+
+treeACopy---
+有一塊記憶體address3：[1,2,3,address1,address2]
+
+```{python}
+treeA=[1,2,3,[4,5],[6,7]]
+treeACopy=treeA.copy()
+
+treeA
+treeACopy
+```
+
+```{python}
+treeACopy[1]="b"
+treeACopy
+treeA
+```
+
+```{python}
+treeA  未完
+```
+
+### 1.9.3 Deep copy
+```{python}
+original = [[0], 1]
+shallow = original[:]
+import copy
+deep = copy.deepcopy(original)
+
+print(original)
+print(shallow)
+print(deep)
+```
+
+# Chapter 2
+
+```{python}
+listA=[2,3,"b"]
+listA+[5]
+listA
+listA.append(5) # 直接在物件中增加
+listA
+```
+
+## 2.1 Operations
+### 2.1.1 數值
+練習
+1. 計算numList每個值+3
+```{python}
+numList=[3,2,11,43]
+[numList[i]+3 for i in [0,1,2,3]]
+```
+
+2. 判斷numList每個值是否>10
+```{python}
+[numList[i]>10 for i in [0,1,2,3]]
+```
+
+list可以和list做+
+```{python}
+numList=[3,2,11,43]
+numList
+
+numList + [3] # 將list [3]接在後面
+numList + ["a","b"]
+```
+
+list可以和整數做*
+```{python}
+numList*2 # list複製兩次接在一起
+```
+
+### 2.1.2 字串
+```{python}
+a="Hello, 你好嗎？"
+len(a) # 字（串）的長度包含空格
+b=["Hello"]
+len(b) # list元素個數
+```
+
+```{python}
+x = "Hello " + "World"
+x
+y = "wow..."*3
+y
+```
+
+```{python}
+a[0]
+a[:5]
+a[-5:]
+```
+
+### 2.1.4 relational operator
+==: 是否相同「值」
+```{python}
+x=[1,2,3]
+y=[1,2,3]
+z=[1,2]
+x==y
+x==z
+x!=z
+```
+
+另一個比較兩物件相同的操作是is/is not（不常用）: 是否相同「物件」（含記憶體位置）
+```{python}
+x=[1,2,3]
+y=[1,2,3]
+x is y # 兩者是否是同一個倉庫
+x is not y
+```
+
+in：屬於
+```{python}
+5 in [1,5,3]
+[5] in [1,5,3] # 只有一個5的list，是否是[1,5,3]
+```
+
+### 2.1.5 logical operator
+```{python}
+x=3
+x<5 and x<10
+x<5 or x>4
+not(x<5 or x>4) # negate(對錯翻轉)
+```
+
+在python中不能用R的這種符號寫，會錯
+```{python}
+x=3
+x<5 & x<10
+x<5 | x>4
+```
+
+練習：使用list comprehension產生一個listG個別元素是否>listF個別元素的list
+```{python}
+listF=[2,5,10,11,-1,7]
+listG=[4,7,-2,10,11,15]
+[listG[i]>listF[i] for i in [0,1,2,3,4,5]]
+```
+
+### 2.1.6 class
+```{python}
+float("12") # 字串12轉數字
+int("12") # 字串12轉整數
+str(12) # 數字12轉字串
+bool("True") # 轉邏輯
+```
+
+注意：要小心class change並不會將向量物件的每個元素個別做class change
+```{python}
+listC=[2,3,4]
+str(listC)
+```
+
+練習：請將listC裡的每個元素轉成字串
+```{python}
+[str(listC[i]) for i in [0,1,2]]
+```
+
+#### Generator comprehension： (<expression> for <var> in <iterable>)中的<iterable>指得是可被一一取出元素的物件
+```{python}
+[i for i in "abc"]
+[i for i in {"A": 25, "B": 1, "C": 44}]
+[i for i in [0,5,8]]
+```
+
+#### 若我們想建立一個代表物件裡元素index的iterable，可以使用range(start_from,end_before,difference)
+```{python}
+list2iter=["a",2,"c"]
+[i for i in [0,1,2]]
+[i for i in range(0,3)] 
+[i for i in range(0,len(list2iter))] 
+```
+
+```{python}
+type(list2iter[0])
+type(list2iter[0])==str
+
+[type(list2iter[i]) is str for i in range(0,3)]
+```
+
+## 2.2 Method
+### 2.2.1 string method
+```{python}
+x="i am steven."
+x.capitalize() # 開頭大寫
+x.center(20) # 20個字元長度，描述放中間
+x.upper() # 全大寫
+x.lower() # 全小寫
+x.find("steven") # steven開始的位置
+```
+
+切割字串
+```{python}
+x1,x2,x3=x.split() # 以空格切
+print(x1)
+print(x2)
+print(x3)
+
+y="王小明,45歲,血型:A"
+y1,y2,y3=y.split(",") # 以,切
+print(y1); print(y2); print(y3)
+
+print(y.split(",",1)) # 只切（前面數來）第一刀
+print(y.split(",",2)) # 只切（前面數來）第二刀
+```
+
+合併字串
+string.join(): 用string來合併字串
+```{python}
+" ".join(["用", "空格", "把", "字", "連起來"])
+```
+
+字元/空白移除
+ string.strip(): 移除兩側空白
+ string.lstrip(): 移除左側空白
+ string.rstrip(): 移除右側空白
+```{python}
+" 你好嗎？ ".strip()
+" 你好嗎？ ".lstrip()
+" 你好嗎？ ".rstrip()
+```
+
+字元替換
+```{python}
+" 你好嗎？ ".strip("嗎？ ")
+" 你好嗎？ ".replace("嗎？","!")
+```
+
+格式替換
+```{python}
+"{0}的{1}成績是{2}".format("小明", "經原", 50)  
+"{}的{}成績是{}".format("小明", "經原", 50) 
+"{1}的{0}成績是{2}".format("經原","小明", 50)   
+
+
+"{name}的{subject}成績是{grade}".format(
+  name="小明",grade=50,subject="經原") 
+```
+
+其他更動
+```{python}
+x="上海"
+xlist=list(x)
+xlist.reverse()
+print(xlist)
+"".join(xlist)
+```
+
+```{python}
+greeting="Hellow zorld"
+iWrong=greeting.find('z')
+greeting=list(greeting)
+greeting[iWrong]="w"
+"".join(greeting)
+```
