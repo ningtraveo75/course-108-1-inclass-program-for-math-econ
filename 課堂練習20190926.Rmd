@@ -1,0 +1,109 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+# 1.7 dictionary
+## 1.7.1 key-value pair
+```{python}
+setA={"a","c",2,3,7}
+setA
+```
+
+```{python}
+setA[1] # 會失敗，set沒有順序概念
+```
+
+```{python}
+setB={
+1:"a",
+2:"c",
+3:2,
+4:3,
+5:7
+}
+```
+
+```{python}
+dictionaryA ={"name": "Mary", "id": "A28374", "grade": 77}
+dictionaryA
+```
+
+```{python}
+dictionaryA["name"]
+```
+更改dictionary
+```{python}
+listA=[2,3,4,7,6]
+listA[2]=-1
+listA
+```
+
+練習
+1. 創造名為grade的dictionary物件存這些資訊
+```{python}
+grade={
+"number": [172,214,322,425,517],
+"name": ["a","b","c","d","e"],
+"score": [80,60,90,70,50]
+}
+grade
+```
+
+2. 取出成績的value
+```{python}
+grade["score"]
+```
+
+3.1 取出"小明",及80
+```{python}
+grade["name"][0]
+grade["score"][0]
+{grade["name"][0]:grade["score"][0]} # 大括號表示是dictionary
+```
+
+3.2
+```{python}
+{
+grade["name"][i]:grade["score"][i] for i in [0,1,2,3,4]
+}
+```
+
+```{python}
+matrixA=[
+[2,3,1],
+[1,0,5]
+]
+sparseMatrix = {
+(0, 0): 3, 
+(0, 2): -2, 
+(0, 3): 11,
+(1, 1): 9, 
+(2, 1): 7, 
+(3, 3): -5}
+print(sparseMatrix) #sparseMatrix只記不為0的位置，當0多的時候可以省空間
+```
+
+```{python}
+sparseMatrix[(3,3)]
+```
+
+
+
+```{python}
+listA=[2,7,5,-2,13]
+listA[0]=0
+listA[1]=("a","b")
+listA
+```
+
