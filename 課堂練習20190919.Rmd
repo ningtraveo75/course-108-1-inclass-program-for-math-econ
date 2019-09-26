@@ -169,7 +169,7 @@ type(tupleC)
 print(tupleC)
 
 tupleC
-tupleC[0] # ffrom 0
+tupleC[0] # from 0
 tupleC[1]
 tupleC[2]
 tupleC[3] # without 3
@@ -189,7 +189,7 @@ type(listA[0][1])
 tupleC=(1,["a","bay"],True)
 tupleC[1][1]
 type(tupleC[1][1])
-tupleC[1][1][0] # 可以更進一步取到字元
+tupleC[1][1][0] # 可以更進一步取到字元b
 ```
 
 學號4107732882
