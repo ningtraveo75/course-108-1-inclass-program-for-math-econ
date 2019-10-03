@@ -1,0 +1,106 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+## 2.3 dictionary
+### 2.3.1 增加元素
+```{python}
+dictionaryA={
+  "date": [2001,2002,2003],
+  "cost": [21000,33000,45880]}
+dictionaryA
+
+dictionaryA["number"]=[100,200,300] # 增加新的key-value pair
+dictionaryA
+```
+
+```{python}
+dictionaryA["date"] # 查詢
+```
+
+
+```{python data3}
+import requests
+response=requests.get("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=3")
+danceInfo=response.json()
+```
+
+```{python}
+type(danceInfo)
+```
+
+### 2.3.2 檢視keys
+```{python}
+danceInfo[1].keys()
+```
+
+### 2.3.3 檢視values: values
+```{python}
+danceInfo[1].values()
+```
+
+### 2.3.6 取出key下的value: get
+```{python}
+danceInfo[1].get("showInfo")
+
+danceInfo[1].get("showInfow","something wrong") # 若資料有錯會顯示something wrong
+```
+
+### 2.3.4 檢視成對(key, value): items
+```{python}
+dictionaryA.keys()
+dictionaryA.values()
+dictionaryA.items()
+```
+
+```{python}
+dictionaryA.keys()
+list(dictionaryA.keys())
+list(dictionaryA.keys())[0]
+```
+
+### 2.3.5 檢查某key值存不存在: in (operation)
+```{python}
+"date" in dictionaryA
+```
+
+練習
+```{python}
+import pandas as pd
+
+finStatement=pd.read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv")
+dict_finStatement=finStatement.to_dict()
+```
+
+```{r}
+library(dplyr)
+py$dict_finStatement %>% View
+```
+
+找出dict_finStatement中’營業利益（損失）‘為負的’公司名稱’
+
+```{python}
+dict_finStatement.get("營業利益（損失）")
+dict_finStatement.get("公司名稱")
+
+dict_finStatement.get("營業利益（損失）")
+```
+
+```{python}
+listA=[10,2,7,3,8]
+
+[listA[index] for index in range(len(listA)) if listA[index]>5] # 取數字
+[index for index in range(len(listA)) if listA[index]>5] # 取位置
+```
+
