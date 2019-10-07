@@ -1,0 +1,129 @@
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+```{python}
+dict_business={
+  "place": ["taoyuan ok","kaoshiung","taipei","taoyuan"],
+  "cost": [21000,33000,45880,60000]}
+dict_business
+```
+
+```{python ans21}
+logi = ["taoyuan" in dict_business["place"][i] for i in range(len(dict_business["place"]))]
+num_taoyuan = sum(logi)
+num_taoyuan
+```
+
+```{python}
+logi2 = [dict_business["cost"][i]>50000 for i in range(len(dict_business["cost"]))]
+num_largeCapital = sum(logi2)
+num_largeCapital
+```
+
+```{python data3}
+import requests
+response=requests.get("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=3")
+danceInfo=response.json()
+```
+
+```{python}
+showInfo = [danceInfo[i].get("showInfo") for i in range(len(danceInfo))]
+local1 = [showInfo[i].get("location") for i in range(len(danceInfo))]
+local1
+```
+
+```{python ans34}
+#showInfo = danceInfo[0].get("showInfo")
+#time1 = danceInfo[1].get("showInfo")[1].get("time")
+time1 = danceInfo[0]
+time1
+```
+
+test1
+```{python}
+danceInfoList = {
+  "title": danceInfo[0].get("title"),
+  "time": danceInfo[0].get("showInfo")[0].get("time"),
+  "location": danceInfo[0].get("showInfo")[0].get("location")
+}
+
+danceInfoList
+```
+
+test2
+```{python}
+danceInfoList = {[
+  "title": danceInfo[i].get("title")for i in range(len(danceInfo))
+   #"time": danceInfo[i].get("showInfo")[0].get("time") for i in range(len(danceInfo)),
+   #"location": danceInfo[i].get("showInfo")[0].get("location") for i in range(len(danceInfo))}
+
+]}
+
+danceInfoList
+```
+
+test3
+```{python}
+danceInfoList = [{
+  "title": danceInfo[i].get("title"),
+  "time": danceInfo[i].get("showInfo")[0].get("time"),
+  "location": danceInfo[i].get("showInfo")[0].get("location")
+} for i in range(len(danceInfo))]
+
+danceInfoList
+```
+
+```{python}
+print(danceInfoList[0:2])
+```
+
+test1
+```{python}
+danceInfoStr = ["【{title}】將於{time}在{location}演出".format(
+  title=danceInfo[i].get("title"),
+  time=danceInfo[i].get("showInfo")[0].get("time"),
+  location=danceInfo[i].get("showInfo")[0].get("location")
+  ) for i in range(len(danceInfo))]
+  
+danceInfoStr
+```
+
+```{python}
+danceInfoStr = ["{title} is {time} at {location}".format(
+  title=danceInfo[i].get("title"),
+  time=danceInfo[i].get("showInfo")[0].get("time"),
+  location=danceInfo[i].get("showInfo")[0].get("location")
+  ) for i in range(len(danceInfo))]
+  
+danceInfoStr
+```
+
+
+```{python}
+len(danceInfo)
+```
+
+"【{title}】將於{time}在{location}演出"
+
+
+
+```{python}
+danceInfoStr = "{title} is {time} at {location}".format(
+  title=danceInfo[i].get("title"),
+  time=danceInfo[i].get("showInfo")[0].get("time"),
+  location=danceInfo[i].get("showInfo")[0].get("location")
+  ) for i in range(len(danceInfo))]
+
+danceInfoStr
+```
+
+
