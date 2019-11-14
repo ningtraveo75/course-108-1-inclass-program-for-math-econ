@@ -1,0 +1,90 @@
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+```{python}
+import numpy as np
+```
+
+```{python}
+M_list=[[7, -9, -5, 10, -13], 
+    [12, -6, -3, -6, -14], 
+    [7, -5, -4, 1, 5]]
+    
+M=np.array(M_list)
+M
+```
+
+```{python}
+df_M = pd.DataFrame(M)
+df_M
+
+df_M.set_axis(['a','b','c'],axis=0,inplace=True)
+df_M
+```
+
+```{python ans11}
+df_jointP = pd.DataFrame(joint_probability)
+df_jointP.set_axis(hw3data['weather index'],axis=0,inplace=True)
+df_jointP.set_axis(hw3data['mood index'],axis=1,inplace=True)
+df_jointP
+
+q1ans['df_jointP']=df_jointP
+```
+
+```{python}
+new = pd.DataFrame()
+new = for i in range(0,3):
+          df_jointP.iloc[i].divide(marginP_weather[i],axis=1)
+new
+
+new = pd.DataFrame()
+new = df_jointP.iloc[0].divide(marginP_weather[0])
+new = df_jointP.iloc[1].divide(marginP_weather[1])
+new
+
+new = pd.DataFrame()
+new[0,] = df_jointP.iloc[0].divide(marginP_weather[0])
+new[1,] = df_jointP.iloc[1].divide(marginP_weather[1])
+new
+```
+
+```{python 1.3舊}
+df_jointP
+df_jointP[0:1]
+df_jointP.sunny
+
+marginP_weather[0]
+df_jointP[0:1].divide(marginP_weather[0],axis=1)
+df_jointP[0:1].divide(marginP_weather[0])
+
+df_jointP[1:2]
+marginP_weather[1]
+df_jointP[1:2].divide(marginP_weather[1],axis=1)
+
+[df_jointP[i:i+1].divide(marginP_weather[i]) for i in range(0,3)]
+
+df_jointP.reset_index(drop=True)
+df_jointP
+[df_jointP[i:i+1].divide(marginP_weather[i]) for i in range(0,3)]
+
+marginP_mood
+marginP_mood[0]
+df_jointP['happy'].divide(marginP_mood[0])
+[df_jointP[i:i+1].divide(marginP_mood[i]) for i in range(0,4)]
+```
+
+```{python}
+np.sum(M,axis=0)
+M[:,np.sum(M,axis=0)>0]
+M[np.sum(M,axis=1)<0,:] 
+```
+
