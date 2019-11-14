@@ -1,0 +1,227 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("C:\\Users\\ningt\\Anaconda3\\envs\\myEnvironment\\python.exe",
+           required = T)
+use_condaenv("myEnvironment", required = T)
+```
+
+# Chapter 5
+## 5.1 Matrix
+```{python}
+import numpy as np
+```
+
+### 5.1.1 產生
+```{python}
+M_list=[[7, -9, -5, 10, -13], 
+    [12, -6, -3, -6, -14], 
+    [7, -5, -4, 1, 5]]
+    
+M=np.array(M_list)
+M
+```
+
+### 5.1.2 元素粹取
+```{python}
+M
+M_list[1][3] # row 2;column 4
+# M_list[1,3] # list 不能這麼做
+
+M
+M[1][3]
+M[1,3] # a position
+M[[0,2],:] # list of positions. columns 全取要寫`:`
+M[[0,2],2:5] # row 1 and 3, col 3 4 5
+M[[True,False,True],:] # list of booleans
+M[:,[True,True, False,False,False]] 
+M[:,np.sum(M,axis=0)>0] # 只取sum across row>0的column
+M[np.sum(M,axis=1)<0,:] # 只取sum across col<0的row
+```
+
+### 5.1.3 numpy copy method
+```{python}
+M_list
+M_list2=M_list.copy()
+M_list2[0][1]=10
+M_list #會發現M_list也被改了
+```
+
+```{python}
+M.copy
+
+M2=M.copy()
+M2[1,1]=2
+
+M
+M2
+```
+
+## 5.2 Data frame
+```{python}
+import pandas as pd
+```
+
+```{python}
+dict_grade={
+    'Number': [172,214,322,425,517],
+    'Name': ["ake","oo","buta","shin","shiro"],
+    'Grade': [80,60,90,70,50]
+}
+
+df_grade0=pd.DataFrame(dict_grade)
+```
+
+### 5.2.2 元素萃取
+#### 5.2.2.1 一維取法
+```{python}
+dict_grade
+dict_grade['Number'][1]
+```
+
+```{python}
+dict_grade['Number']
+df_grade0['Number'] # use label Number to draw
+df_grade0.Number # R: df_grade0$Number
+```
+
+```{python}
+df_grade0[2:3]
+
+df_grade0[[True,False,True,False,False]]
+df_grade0.Grade>70
+df_grade0[df_grade0.Grade>70]
+```
+
+#### 5.2.2.2 二維取法
+##### 5.2.2.2.1 .loc[,]
+```{python}
+df_grade0.loc[[0,2,4],['Number','Grade']]
+df_grade0.loc[1:3,:] # draw include 3
+df_grade0.loc[:,'Number':'Grade']
+```
+
+##### 5.2.2.2.2 .iloc[,]
+```{python}
+df_grade0.iloc[[0,2,4],[0,2]]
+df_grade0.iloc[1:3,:]
+df_grade0.iloc[:,[0,2]]
+
+df_grade0.iloc[:,[True,False,True]]
+df_grade0.loc[:,[True,False,True]]
+```
+
+##### 5.2.2.2.3 pandas index
+```{python}
+df_grade0.sample(n=10, replace=True)
+```
+
+```{python}
+df_grade0
+df_grade1=df_grade0.loc[[0,3],['Number','Name']]
+
+df_grade1
+df_grade0.loc[[3,0],'Grade']
+```
+
+###### 5.2.2.2.3.1 .set_axis(): 設定index值
+```{python}
+df_grade0.set_axis(['a','b','c','d','e'],axis=0,inplace=True)
+df_grade0
+```
+
+.set_index()
+(inplace=True: 確保改到原本資料)
+```{python}
+df_grade0.reset_index(inplace=True)
+df_grade0.set_index("Number",inplace=True)
+df_grade0
+```
+
+## 5.3 應用
+### 5.3.1 list
+```{python}
+numArray=np.array(numList)
+numArray+3
+numArray>10
+numArray+np.array([0,3,-1,2])
+numArray*2
+```
+
+### 5.3.2 dictionary
+```{python}
+import pandas as pd
+
+finStatement=pd.read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv")
+dict_finStatement=finStatement.to_dict()
+```
+
+```{python}
+finStatement.columns
+```
+
+```{python}
+finStatement['營業利益(損失)']<0
+
+# 1 維
+a=finStatement['公司名稱']
+b=finStatement['營業利益(損失)']<0
+b
+a[b]
+
+# 2 維
+finStatement.loc[b,'公司名稱']
+
+finStatement.columns.get_loc('公司名稱')
+finStatement.iloc[list(b),4]
+
+```
+
+```{python}
+b=finStatement['營業利益(損失)']<0
+type(b) # type is not lisy of booleans
+# <class 'pandas'>
+# iloc[]  未完
+```
+
+# Chapter 6 Python模組
+## 6.1 目前工作路徑
+```{python}
+import os
+path = os.getcwd()
+print(path)
+```
+
+## 6.3 Import
+```{python}
+import mymodule
+
+mymodule.pi
+mymodule.area(3.24)
+```
+
+```{python}
+import mymodule as mm
+mm.pi
+mm.area(3.24)
+```
+
+```{python}
+from mymodule import pi,area
+from mymodule import *
+pi
+```
+
+```{python}
+import pandas as pd
+# 如此一來，就不會有引入函數時，把python原本的函數蓋掉的問題
+# py.sum()及sum()不同
+```
+
